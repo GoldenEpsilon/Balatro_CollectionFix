@@ -48,8 +48,9 @@ function create_UIBox_your_collection_generic(pool, rows, cols, rowoffset, spawn
         end
         for j = 1, #G.your_collection do
             for i = 1, cols + (rowoffset and (j + 1) % 2 or 0) do
-                local center = G.P_CENTER_POOLS[pool]
-                [i + (j - 1) * cols + (cols * (#G.your_collection) * (args.cycle_config.current_option - 1)) + (rowoffset and #G.your_collection / 2 or 0) * (args.cycle_config.current_option - 1)]
+                local center = G.P_CENTER_POOLS[pool][i + 
+                    (j - 1) * cols + (cols * (#G.your_collection) * (args.cycle_config.current_option - 1)) + 
+                    (rowoffset and #G.your_collection / 2 or 0) * (args.cycle_config.current_option - 1)]
                 if not center then break end
                 local card = Card(G.your_collection[j].T.x + G.your_collection[j].T.w / 2, G.your_collection[j].T.y,
                     G.CARD_W, G.CARD_H, G.P_CARDS.empty, center)
@@ -85,4 +86,8 @@ end
 
 function create_UIBox_your_collection_tarots()
     return create_UIBox_your_collection_generic("Tarot", 2, 5, true, function(card, center, i, j) card:start_materialize(nil, i > 1 or j > 1) end, 5.25, 1, 0);
+end
+
+function create_UIBox_your_collection_spectrals()
+    return create_UIBox_your_collection_generic("Spectral", 2, 4, true, function(card, center, i, j) card:start_materialize(nil, i > 1 or j > 1) end, 4.25, 1, 0);
 end
